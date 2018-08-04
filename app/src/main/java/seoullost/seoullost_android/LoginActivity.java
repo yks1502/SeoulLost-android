@@ -37,19 +37,8 @@ public class LoginActivity extends AppCompatActivity {
         tokenCall.enqueue(new Callback<Token>() {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
-                Token token = response.body();
-                if (token == null) {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
-                    alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    alert.setMessage("아이디 또는 비밀번호가 올바르지 않습니다.");
-                    alert.show();
-                } else {
-                    editor.putString("token", "Token " + token.getToken());
+                if (response.isSuccessful()) {
+                    editor.putString("token", "Token " + response.body().getToken());
                     editor.commit();
                     AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
                     alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -60,6 +49,16 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                     alert.setMessage("로그인 되었습니다.");
+                    alert.show();
+                } else {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
+                    alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    alert.setMessage("아이디 또는 비밀번호가 올바르지 않습니다.");
                     alert.show();
                 }
             }
