@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,8 +17,13 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     private ApiApplication apiApplication;
     private ApiService apiService;
-    private EditText usernameInput, passwordInput;
+    private SharedPreferences user;
     private SharedPreferences.Editor editor;
+
+    @BindView(R.id.username_input)
+    protected EditText usernameInput;
+    @BindView(R.id.password_input)
+    protected EditText passwordInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +31,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         apiApplication = (ApiApplication) getApplicationContext();
         apiService = apiApplication.getApiService();
-        SharedPreferences user = getSharedPreferences("user", MODE_PRIVATE);
+        user = getSharedPreferences("user", MODE_PRIVATE);
         editor = user.edit();
-        usernameInput = findViewById(R.id.username_input);
-        passwordInput = findViewById(R.id.password_input);
+        ButterKnife.bind(this);
     }
 
     public void handleLogin(View view) {

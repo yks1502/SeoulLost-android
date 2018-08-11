@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,7 +16,21 @@ import retrofit2.Response;
 public class SignUpActivity extends AppCompatActivity {
     private ApiApplication apiApplication;
     private ApiService apiService;
-    private EditText usernameInput, passwordInput, passwordConfirmationInput, nicknameInput, emailInput, addressInput, contactInput;
+
+    @BindView(R.id.username_input)
+    protected EditText usernameInput;
+    @BindView(R.id.password_input)
+    protected EditText passwordInput;
+    @BindView(R.id.password_confirmation_input)
+    protected EditText passwordConfirmationInput;
+    @BindView(R.id.nickname_input)
+    protected EditText nicknameInput;
+    @BindView(R.id.email_input)
+    protected EditText emailInput;
+    @BindView(R.id.address_input)
+    protected EditText addressInput;
+    @BindView(R.id.contact_input)
+    protected EditText contactInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,14 +38,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         apiApplication = (ApiApplication) getApplicationContext();
         apiService = apiApplication.getApiService();
-
-        usernameInput = findViewById(R.id.username_input);
-        passwordInput = findViewById(R.id.password_input);
-        passwordConfirmationInput = findViewById(R.id.password_confirmation_input);
-        nicknameInput = findViewById(R.id.nickname_input);
-        emailInput = findViewById(R.id.email_input);
-        addressInput = findViewById(R.id.address_input);
-        contactInput = findViewById(R.id.contact_input);
+        ButterKnife.bind(this);
     }
 
     public void handleSignUp(View view) {

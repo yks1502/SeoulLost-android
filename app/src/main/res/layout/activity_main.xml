@@ -19,4 +19,11 @@
         android:text="회원가입 페이지로"
         android:onClick="toSignUpPage" />
 
+    <Button
+        android:id="@+id/lostlist_page_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="to lostlist page"
+        android:onClick="toLostListPage" />
+
 </LinearLayout>

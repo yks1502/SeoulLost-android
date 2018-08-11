@@ -22,4 +22,9 @@ public class MainActivity extends AppCompatActivity {
         Intent signUpIntent = new Intent(this, SignUpActivity.class);
         startActivity(signUpIntent);
     }
+
+    public void toLostListPage(View view) {
+        Intent lostListIntent = new Intent(this, LostListActivity.class);
+        startActivity(lostListIntent);
+    }
 }

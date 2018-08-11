@@ -1,6 +1,7 @@
 package seoullost.seoullost_android;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import java.io.IOException;
 
@@ -15,10 +16,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiApplication extends Application {
     public static final String BASE_URL = "http://192.168.200.114:8000";
     private ApiService apiService;
+    private SharedPreferences user;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        user = getSharedPreferences("user", MODE_PRIVATE);
     }
 
     public ApiService getApiService() {
@@ -32,6 +35,10 @@ public class ApiApplication extends Application {
                 public Response intercept(Chain chain) throws IOException {
                     Request original = chain.request();
                     Request.Builder requestBuilder = original.newBuilder();
+                    String token = user.getString("token", null);
+                    if (token != null) {
+                        requestBuilder.header("Authorization", token);
+                    }
                     Request request = requestBuilder.build();
                     return chain.proceed(request);
                 }
